@@ -1,10 +1,9 @@
 import Stack from "@mui/material/Stack";
 import { COMMON_TITLES } from "src/constant";
-import HeroSection from "src/components/HeroSection";
+import ListingGrid from "src/components/ListingGrid";
 import { genreSliceEndpoints, useGetGenresQuery } from "src/store/slices/genre";
 import { MEDIA_TYPE } from "src/types/Common";
 import { CustomGenre, Genre } from "src/types/Genre";
-import SliderRowForGenre from "src/components/VideoSlider";
 import store from "src/store";
 
 export async function loader() {
@@ -13,24 +12,20 @@ export async function loader() {
   );
   return null;
 }
-export function Component() {
+
+function HomePage() {
   const { data: genres, isSuccess } = useGetGenresQuery(MEDIA_TYPE.Movie);
 
   if (isSuccess && genres && genres.length > 0) {
     return (
       <Stack spacing={2}>
-        <HeroSection mediaType={MEDIA_TYPE.Movie} />
-        {[...COMMON_TITLES, ...genres].map((genre: Genre | CustomGenre) => (
-          <SliderRowForGenre
-            key={genre.id || genre.name}
-            genre={genre}
-            mediaType={MEDIA_TYPE.Movie}
-          />
-        ))}
+        <ListingGrid />
       </Stack>
     );
   }
   return null;
 }
 
-Component.displayName = "HomePage";
+HomePage.displayName = "HomePage";
+
+export default HomePage;

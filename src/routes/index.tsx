@@ -1,7 +1,8 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { MAIN_PATH } from "src/constant";
-
 import MainLayout from "src/layouts/MainLayout";
+import HomePage from "src/pages/HomePage";
+import ListingDetail from "src/pages/ListingDetail";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,12 @@ const router = createBrowserRouter([
       },
       {
         path: MAIN_PATH.browse,
-        lazy: () => import("src/pages/HomePage"),
+        element: <HomePage />,
+        loader: () => import("src/pages/HomePage").then(module => module.loader()),
+      },
+      {
+        path: "listing/:id",
+        element: <ListingDetail />,
       },
       {
         path: MAIN_PATH.genreExplore,
